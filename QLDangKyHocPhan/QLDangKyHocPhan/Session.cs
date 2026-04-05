@@ -10,6 +10,6 @@ namespace QLDangKyHocPhan
     {
         public static string Username { get; set; }
         public static int Role { get; set; }
-        public static int? MaSV { get; set; }
+        public static int MaSV { get; set; }
     }
 }

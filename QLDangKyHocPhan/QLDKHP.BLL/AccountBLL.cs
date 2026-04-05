@@ -15,5 +15,9 @@ namespace QLDKHP.BLL
         {
             return dal.CheckLogin(username, password);
         }
+        public int? GetMaSV(string username)
+        {
+            return dal.GetMaSV(username);
+        }
     }
 }

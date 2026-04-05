@@ -42,8 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountDAL.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="DangKyDAL.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="LopHocPhanDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
