@@ -31,7 +31,6 @@ namespace QLDangKyHocPhan
                 Session.Role = account.Role;
                 Session.MaSV = bll.GetMaSV(account.Username)??0;// ??0 để tránh lỗi null khi lấy mã sinh viên, nếu không có sẽ trả về 0
                 MessageBox.Show("Đăng nhập thành công!");
-                MessageBox.Show("Role = " + account.Role);
                 if (account.Role == 0) // Sinh viên
                 {
                     FormStudent f = new FormStudent();

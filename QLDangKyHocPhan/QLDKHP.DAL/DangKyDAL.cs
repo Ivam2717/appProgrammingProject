@@ -18,7 +18,7 @@ namespace QLDKHP.DAL
             using (SqlConnection conn = db.GetConnection())
             {
                 conn.Open();
-                string query = "INSERT INTO DangKy (MaSV, MaLopHP, TrangThai) VALUES (@MaSV, @MaLopHP, N'Đang học')";
+                string query = "INSERT INTO DangKy (MaSV, MaLopHP) VALUES (@MaSV, @MaLopHP)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
                 cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
@@ -60,6 +60,23 @@ namespace QLDKHP.DAL
                 }
             }
             return list;
+        }
+        public bool Exists(int maSV, int maLopHP)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+
+                string query = "SELECT COUNT(*) FROM DangKy WHERE MaSV = @MaSV AND MaLopHP = @MaLopHP";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+
+                int count = (int)cmd.ExecuteScalar();
+
+                return count > 0; // >0 = đã đăng ký, 0 = chưa đăng ký
+            }
         }
     }
 }

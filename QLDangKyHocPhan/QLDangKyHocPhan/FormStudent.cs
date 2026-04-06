@@ -22,7 +22,6 @@ namespace QLDangKyHocPhan
 
         private void FormStudent_Load(object sender, EventArgs e)
         {
-            // Hiển thị tên user
             lblWelcome.Text = "Xin chào: " + Session.Username;
 
             // Load lớp học phần (đã JOIN)
@@ -41,6 +40,50 @@ namespace QLDangKyHocPhan
             dgvDaDangKy.Columns["Thu"].HeaderText = "Thứ";
             dgvDaDangKy.Columns["GioBatDau"].HeaderText = "Bắt đầu";
             dgvDaDangKy.Columns["GioKetThuc"].HeaderText = "Kết thúc";
+        }
+
+        private void btnDangKy_Click(object sender, EventArgs e)
+        {
+            if (dgvLopHocPhan.CurrentRow == null) // check chọn dòng
+            {
+                MessageBox.Show("Chưa chọn lớp!");
+                return;
+            }
+            var row = dgvLopHocPhan.CurrentRow; // lấy dòng hiện tại
+            int maLopHP = Convert.ToInt32(row.Cells["MaLopHP"].Value);// lấy giá trị mã lớp học phần hiện tại
+            LopHocPhanDTO lop = new LopHocPhanDTO
+            {
+                MaLopHP = maLopHP,
+                Thu = Convert.ToInt32(row.Cells["Thu"].Value),
+                GioBatDau = (TimeSpan)row.Cells["GioBatDau"].Value,
+                GioKetThuc = (TimeSpan)row.Cells["GioKetThuc"].Value
+            };
+            DangKyBLL bll = new DangKyBLL();
+            if (bll.DaDangKy(Session.MaSV, maLopHP))
+            {
+                MessageBox.Show("Bạn đã đăng ký lớp này rồi!");
+                return;
+            }
+
+            // 4. Check trùng lịch
+            if (bll.CheckTrungLich(Session.MaSV, lop))
+            {
+                MessageBox.Show("Lớp bị trùng lịch!");
+                return;
+            }
+
+
+            bool result = bll.Insert(Session.MaSV, (int)maLopHP); // thêm vào bảng dăng ký
+
+            if (result)
+            {
+                MessageBox.Show("Đăng ký thành công!");
+            }
+            else
+            {
+                MessageBox.Show("Đăng ký thất bại!");
+            }
+            dgvDaDangKy.DataSource = bll.GetByMaSV(Session.MaSV);
         }
     }
 }
