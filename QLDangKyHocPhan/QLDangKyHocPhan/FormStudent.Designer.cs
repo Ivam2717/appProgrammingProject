@@ -75,6 +75,7 @@
             this.btnHuy.TabIndex = 3;
             this.btnHuy.Text = "Hủy đăng ký";
             this.btnHuy.UseVisualStyleBackColor = true;
+            this.btnHuy.Click += new System.EventHandler(this.btnHuy_Click);
             // 
             // dgvDaDangKy
             // 

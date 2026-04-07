@@ -25,12 +25,12 @@ namespace QLDKHP.DAL
                     lhp.MaLopHP,
                     mh.TenMon,
                     lhp.Thu,
-                    lhp.GioBatDau,
+                    lhp.GioBatDau, 
                     lhp.GioKetThuc,
                     lhp.SoLuongToiDa
                 FROM LopHocPhan lhp
                 JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
-                ";
+                ";// Sau này đổi thành MaLopHP, MaMon, Tiet,Thu,NgayBatDau, NgayKetThuc, SoLuongToiDa
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 SqlDataReader reader = cmd.ExecuteReader();

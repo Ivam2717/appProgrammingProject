@@ -59,31 +59,53 @@ namespace QLDangKyHocPhan
                 GioKetThuc = (TimeSpan)row.Cells["GioKetThuc"].Value
             };
             DangKyBLL bll = new DangKyBLL();
-            if (bll.DaDangKy(Session.MaSV, maLopHP))
+            if (bll.DaDangKy(Session.MaSV, maLopHP))// check đã đăng ký chưa
             {
-                MessageBox.Show("Bạn đã đăng ký lớp này rồi!");
+                MessageBox.Show("Bạn đã đăng ký lớp này rồi");
                 return;
             }
-
-            // 4. Check trùng lịch
-            if (bll.CheckTrungLich(Session.MaSV, lop))
+            if (bll.CheckTrungLich(Session.MaSV, lop))// check trùng lịch
             {
-                MessageBox.Show("Lớp bị trùng lịch!");
+                MessageBox.Show("Lớp bị trùng lịch");
                 return;
             }
-
-
+            // check sĩ số lớp
+            if (!bll.SiSo(maLopHP))
+            {
+                MessageBox.Show("Lớp đã đầy");
+                return;
+            }
+            // nếu 2 sinh viên dang ký cùng lúc thì có thể vượt sĩ số, cần check lại DAL
             bool result = bll.Insert(Session.MaSV, (int)maLopHP); // thêm vào bảng dăng ký
-
             if (result)
             {
-                MessageBox.Show("Đăng ký thành công!");
+                MessageBox.Show("Đăng ký thành công");
             }
             else
             {
-                MessageBox.Show("Đăng ký thất bại!");
+                MessageBox.Show("Đăng ký thất bại");
             }
-            dgvDaDangKy.DataSource = bll.GetByMaSV(Session.MaSV);
+            dgvDaDangKy.DataSource = bll.GetByMaSV(Session.MaSV);// load lại sau khi bấm đăng ký
+        }
+        private void btnHuy_Click(object sender, EventArgs e)
+        {
+            if (dgvDaDangKy.CurrentRow == null)
+            {
+                MessageBox.Show("Chưa chọn lớp hủy đăng ký");
+                return;
+            }
+
+            int maLopHP = Convert.ToInt32(dgvDaDangKy.CurrentRow.Cells["MaLopHP"].Value);
+            DangKyBLL bll = new DangKyBLL();
+            if (bll.Delete(Session.MaSV, maLopHP))
+            {
+                MessageBox.Show("Đã hủy đăng ký");
+                dgvDaDangKy.DataSource = bll.GetByMaSV(Session.MaSV);
+            }
+            else
+            {
+                MessageBox.Show("Hủy thất bại");
+            }
         }
     }
 }

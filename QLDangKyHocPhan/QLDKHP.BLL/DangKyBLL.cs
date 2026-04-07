@@ -39,5 +39,16 @@ namespace QLDKHP.BLL
         {
             return dal.Insert(maSV, maLopHP);
         }
+        public bool SiSo(int maLopHP)//check sĩ số lớp học phần
+        {
+            int soLuong = dal.DemSoLuong(maLopHP);
+            int toiDa = dal.LaySoLuongToiDa(maLopHP);
+
+            return soLuong < toiDa;
+        }
+        public bool Delete(int maSV, int maLopHP)
+        {
+            return dal.Delete(maSV, maLopHP);
+        }
     }
 }

@@ -78,5 +78,43 @@ namespace QLDKHP.DAL
                 return count > 0; // >0 = đã đăng ký, 0 = chưa đăng ký
             }
         }
+        public int DemSoLuong(int maLopHP) // đếm số lượng sv đã đăng ký lớp học phần
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+
+                string query = "SELECT COUNT(*) FROM DangKy WHERE MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+
+                return (int)cmd.ExecuteScalar();
+            }
+        }
+        public int LaySoLuongToiDa(int maLopHP) // lấy số lượng tối đã của lớp
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+
+                string query = "SELECT SoLuongToiDa FROM LopHocPhan WHERE MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+
+                return (int)cmd.ExecuteScalar();
+            }
+        }
+        public bool Delete(int maSV, int maLopHP)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = "DELETE FROM DangKy WHERE MaSV = @MaSV AND MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }
