@@ -22,8 +22,8 @@ namespace QLDKHP.BLL
             {
                 if (lop.Thu == lopMoi.Thu)
                 {
-                    if (lopMoi.GioBatDau < lop.GioKetThuc &&
-                        lopMoi.GioKetThuc > lop.GioBatDau)
+                    if (lopMoi.TietBatDau < lop.TietKetThuc &&
+                        lopMoi.TietKetThuc > lop.TietBatDau)
                     {
                         return true; // true = bị trùng lịch
                     }
@@ -49,6 +49,10 @@ namespace QLDKHP.BLL
         public bool Delete(int maSV, int maLopHP)
         {
             return dal.Delete(maSV, maLopHP);
+        }
+        public int TongTinChi(int maSV)
+        {
+            return dal.TongTinChi(maSV);
         }
     }
 }

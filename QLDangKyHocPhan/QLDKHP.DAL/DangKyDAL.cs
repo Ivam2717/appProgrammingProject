@@ -33,15 +33,33 @@ namespace QLDKHP.DAL
                 conn.Open();
                 string query = @"
                 SELECT 
-                    lhp.MaLopHP,
-                    mh.TenMon,
-                    lhp.Thu,
-                    lhp.GioBatDau,
-                    lhp.GioKetThuc
+                lhp.MaLopHP,
+                lhp.MaMon,
+                mh.TenMon,
+                mh.SoTinChi,
+                lhp.Thu,
+                lhp.TietBatDau,
+                lhp.TietKetThuc,
+                lhp.NgayBatDau,
+                lhp.NgayKetThuc,
+                lhp.SoLuongToiDa,
+                COUNT(dk2.MaSV) AS SoLuongDaDangKy
                 FROM DangKy dk
                 JOIN LopHocPhan lhp ON dk.MaLopHP = lhp.MaLopHP
                 JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
+                LEFT JOIN DangKy dk2 ON dk2.MaLopHP = lhp.MaLopHP
                 WHERE dk.MaSV = @MaSV
+                GROUP BY
+                    lhp.MaLopHP,
+                    lhp.MaMon,
+                    mh.TenMon,
+                    mh.SoTinChi,
+                    lhp.Thu,
+                    lhp.TietBatDau,
+                    lhp.TietKetThuc,
+                    lhp.NgayBatDau,
+                    lhp.NgayKetThuc,
+                    lhp.SoLuongToiDa
                 ";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
@@ -53,8 +71,8 @@ namespace QLDKHP.DAL
                         MaLopHP = (int)reader["MaLopHP"],
                         TenMon = reader["TenMon"].ToString(),
                         Thu = (int)reader["Thu"],
-                        GioBatDau = (TimeSpan)reader["GioBatDau"],
-                        GioKetThuc = (TimeSpan)reader["GioKetThuc"]
+                        TietBatDau = (int)reader["TietBatDau"],
+                        TietKetThuc = (int)reader["TietKetThuc"]
                     };
                     list.Add(lhp);
                 }
@@ -114,6 +132,24 @@ namespace QLDKHP.DAL
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
                 cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public int TongTinChi(int maSV)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = @"SELECT SUM(mh.SoTinChi)
+                         FROM DangKy dk
+                         JOIN LopHocPhan lhp ON dk.MaLopHP = lhp.MaLopHP
+                         JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
+                         WHERE dk.MaSV = @MaSV";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaSV", maSV);
+                object result = cmd.ExecuteScalar();
+                if (result == DBNull.Value)
+                    return 0;
+                return Convert.ToInt32(result);
             }
         }
     }

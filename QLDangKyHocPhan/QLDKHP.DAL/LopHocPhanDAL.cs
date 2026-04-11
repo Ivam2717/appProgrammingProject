@@ -20,17 +20,31 @@ namespace QLDKHP.DAL
             {
                 conn.Open();
 
-                string query = @"
+                string query = @"                
                 SELECT 
                     lhp.MaLopHP,
                     mh.TenMon,
+                    mh.SoTinChi,
                     lhp.Thu,
-                    lhp.GioBatDau, 
-                    lhp.GioKetThuc,
-                    lhp.SoLuongToiDa
+                    lhp.TietBatDau,
+                    lhp.TietKetThuc,
+                    lhp.NgayBatDau,
+                    lhp.NgayKetThuc,
+                    lhp.SoLuongToiDa,
+                    COUNT(dk.MaSV) AS SoLuongDaDangKy
                 FROM LopHocPhan lhp
-                JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
-                ";// Sau này đổi thành MaLopHP, MaMon, Tiet,Thu,NgayBatDau, NgayKetThuc, SoLuongToiDa
+                LEFT JOIN DangKy dk ON dk.MaLopHP = lhp.MaLopHP
+                JOIN MonHoc mh ON mh.MaMon = lhp.MaMon
+                GROUP BY
+                    lhp.MaLopHP,
+                    mh.TenMon,
+                    mh.SoTinChi,
+                    lhp.Thu,
+                    lhp.TietBatDau,
+                    lhp.TietKetThuc,
+                    lhp.NgayBatDau,
+                    lhp.NgayKetThuc,
+                    lhp.SoLuongToiDa";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -41,16 +55,19 @@ namespace QLDKHP.DAL
                     {
                         MaLopHP = (int)reader["MaLopHP"],
                         TenMon = reader["TenMon"].ToString(),
+                        SoTinChi = (int)reader["SoTinChi"],
                         Thu = (int)reader["Thu"],
-                        GioBatDau = (TimeSpan)reader["GioBatDau"],
-                        GioKetThuc = (TimeSpan)reader["GioKetThuc"],
-                        SoLuongToiDa = (int)reader["SoLuongToiDa"]
-                    };
+                        TietBatDau = (int)reader["TietBatDau"],
+                        TietKetThuc = (int)reader["TietKetThuc"],
+                        NgayBatDau = (DateTime)reader["NgayBatDau"],
+                        NgayKetThuc = (DateTime)reader["NgayKetThuc"],
+                        SoLuongToiDa = (int)reader["SoLuongToiDa"],
+                        SoLuongDaDangKy = (int)reader["SoLuongDaDangKy"],
+                    };                    
 
                     list.Add(lhp);
                 }
             }
-
             return list;
         }
     }
