@@ -22,9 +22,7 @@ namespace QLDangKyHocPhan
 
         private void FormStudent_Load(object sender, EventArgs e)
         {
-            lblWelcome.Text = "Xin chào: " + Session.Username;
-            
-
+            lblWelcome.Text = "Xin chào: " + Session.Username;    
             // Load lớp học phần (đã JOIN)
             LopHocPhanBLL lhpBLL = new LopHocPhanBLL();
             dgvLopHocPhan.DataSource = lhpBLL.GetAll();
@@ -86,6 +84,11 @@ namespace QLDangKyHocPhan
             if (!bll.SiSo(lop.MaLopHP))
             {
                 MessageBox.Show("Lớp đã đầy");
+                return;
+            }
+            if (bll.VuotQuaTinChi(Session.MaSV, lop.MaLopHP))// kiem tra co vượt quá tín chỉ cho phép k
+            {
+                MessageBox.Show("Vượt quá số tín chỉ cho phép!");
                 return;
             }
             // nếu 2 sinh viên dang ký cùng lúc thì có thể vượt sĩ số, cần check lại DAL

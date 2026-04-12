@@ -54,5 +54,14 @@ namespace QLDKHP.BLL
         {
             return dal.TongTinChi(maSV);
         }
+        public bool VuotQuaTinChi(int maSV, int maLopHP)
+        {
+            int tongHienTai = TongTinChi(maSV);
+
+            LopHocPhanDAL dalLop = new LopHocPhanDAL();
+            int tinChiLopMoi = dalLop.GetSoTinChi(maLopHP);
+
+            return (tongHienTai + tinChiLopMoi) > 18;
+        }
     }
 }

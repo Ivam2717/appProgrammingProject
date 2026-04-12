@@ -38,11 +38,10 @@ namespace QLDangKyHocPhan
                     this.Hide();
                 }
                 else if (account.Role == 1) // Admin
-                {
-                    // hiện tại chưa có form admin nên tạm thời sẽ ntn, có sẽ sửa lại
-                    //FormAdmin f = new FormAdmin();
-                    //f.Show();
-                    //this.Hide();
+                {                    
+                    FormAdmin f = new FormAdmin();
+                    f.Show();
+                    this.Hide();
                 }
             }
             else

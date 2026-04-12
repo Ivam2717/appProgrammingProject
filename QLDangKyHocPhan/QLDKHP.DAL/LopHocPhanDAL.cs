@@ -70,5 +70,21 @@ namespace QLDKHP.DAL
             }
             return list;
         }
+        public int GetSoTinChi(int maLopHP)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = @"
+                SELECT mh.SoTinChi
+                FROM LopHocPhan lhp
+                JOIN MonHoc mh ON lhp.MaMon = mh.MaMon
+                WHERE lhp.MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+                object result = cmd.ExecuteScalar();
+                return result != null ? Convert.ToInt32(result) : 0;
+            }
+        }
     }
 }

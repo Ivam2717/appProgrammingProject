@@ -45,6 +45,7 @@
     <Compile Include="DangKyDAL.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="LopHocPhanDAL.cs" />
+    <Compile Include="MonHocDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
