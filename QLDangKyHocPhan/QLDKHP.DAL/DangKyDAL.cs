@@ -18,7 +18,11 @@ namespace QLDKHP.DAL
             using (SqlConnection conn = db.GetConnection())
             {
                 conn.Open();
-                string query = "INSERT INTO DangKy (MaSV, MaLopHP) VALUES (@MaSV, @MaLopHP)";
+                string query = @"
+                INSERT INTO DangKy (MaSV, MaLopHP)
+                SELECT @MaSV, @MaLopHP
+                WHERE (SELECT COUNT(*) FROM DangKy WHERE MaLopHP = @MaLopHP) 
+                < (SELECT SoLuongToiDa FROM LopHocPhan WHERE MaLopHP = @MaLopHP)";//cho phép dang ký nếu số lượng đã đăng ký < số lượng tối đa của lớp học phần
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@MaSV", maSV);
                 cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);

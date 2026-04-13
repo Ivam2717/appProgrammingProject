@@ -86,5 +86,96 @@ namespace QLDKHP.DAL
                 return result != null ? Convert.ToInt32(result) : 0;
             }
         }
+        public bool Insert(int maMon, int thu, int tietBatDau, int tietKetThuc, DateTime ngayBatDau, DateTime ngayKetThuc, int soLuong)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = @"
+                INSERT INTO LopHocPhan
+                (MaMon, Thu, TietBatDau, TietKetThuc, NgayBatDau, NgayKetThuc, SoLuongToiDa)
+                VALUES
+                (@MaMon, @Thu, @TietBatDau, @TietKetThuc, @NgayBatDau, @NgayKetThuc, @SoLuong)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaMon", maMon);
+                cmd.Parameters.AddWithValue("@Thu", thu);
+                cmd.Parameters.AddWithValue("@TietBatDau", tietBatDau);
+                cmd.Parameters.AddWithValue("@TietKetThuc", tietKetThuc);
+                cmd.Parameters.AddWithValue("@NgayBatDau", ngayBatDau);
+                cmd.Parameters.AddWithValue("@NgayKetThuc", ngayKetThuc);
+                cmd.Parameters.AddWithValue("@SoLuong", soLuong);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public bool Delete(int maLopHP)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = "DELETE FROM LopHocPhan WHERE MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public bool HasSinhVien(int maLopHP)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM DangKy WHERE MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+                int count = (int)cmd.ExecuteScalar();
+                return count > 0;
+            }
+        }
+        public List<int> GetSinhVienByLop(int maLopHP)
+        {
+            List<int> list = new List<int>();
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = @"
+                SELECT MaSv
+                FROM DangKy
+                WHERE dk.MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaLopHP", maLopHP);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    list.Add((int)reader["MaSV"]);
+                }
+            }
+            return list;
+        }
+        public bool Update(LopHocPhanDTO lop)
+        {
+            using (SqlConnection conn = db.GetConnection())
+            {
+                conn.Open();
+                string query = @"
+                UPDATE LopHocPhan
+                SET MaMon = @MaMon,
+                    Thu = @Thu,
+                    TietBatDau = @TietBatDau,
+                    TietKetThuc = @TietKetThuc,
+                    NgayBatDau = @NgayBatDau,
+                    NgayKetThuc = @NgayKetThuc,
+                    SoLuongToiDa = @SoLuong
+                WHERE MaLopHP = @MaLopHP";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaMon", lop.MaMon);
+                cmd.Parameters.AddWithValue("@Thu", lop.Thu);
+                cmd.Parameters.AddWithValue("@TietBatDau", lop.TietBatDau);
+                cmd.Parameters.AddWithValue("@TietKetThuc", lop.TietKetThuc);
+                cmd.Parameters.AddWithValue("@NgayBatDau", lop.NgayBatDau);
+                cmd.Parameters.AddWithValue("@NgayKetThuc", lop.NgayKetThuc);
+                cmd.Parameters.AddWithValue("@SoLuong", lop.SoLuongToiDa);
+                cmd.Parameters.AddWithValue("@MaLopHP", lop.MaLopHP);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

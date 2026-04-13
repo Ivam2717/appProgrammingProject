@@ -66,8 +66,9 @@
             // menuLopHP
             // 
             this.menuLopHP.Name = "menuLopHP";
-            this.menuLopHP.Size = new System.Drawing.Size(182, 26);
+            this.menuLopHP.Size = new System.Drawing.Size(224, 26);
             this.menuLopHP.Text = "Lớp học phần";
+            this.menuLopHP.Click += new System.EventHandler(this.menuLopHP_Click);
             // 
             // FormAdmin
             // 
