@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLDKHP.BLL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,18 @@ namespace QLDangKyHocPhan
         public FormLopHocPhan()
         {
             InitializeComponent();
+        }
+
+        private void FormLopHocPhan_Load(object sender, EventArgs e)
+        {
+            LoadMonHoc();
+        }
+        private void LoadMonHoc()
+        {
+            MonHocBLL bll =new MonHocBLL();
+            cbMonHoc.DataSource = bll.GetAll();
+            cbMonHoc.DisplayMember = "TenMon";
+            cbMonHoc.ValueMember = "MaMon";
         }
     }
 }
