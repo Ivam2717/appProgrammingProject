@@ -58,6 +58,12 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLopHocPhan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLopHocPhan.Designer.cs">
+      <DependentUpon>FormLopHocPhan.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMonHoc.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -11,9 +11,9 @@ using QLDKHP.BLL;
 
 namespace QLDangKyHocPhan
 {
-    public partial class btnClear : Form
+    public partial class FormMonHoc : Form
     {
-        public btnClear()
+        public FormMonHoc()
         {
             InitializeComponent();
         }

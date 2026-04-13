@@ -42,7 +42,7 @@
             this.quảnLýToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1016, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -52,11 +52,12 @@
             this.menuMonHoc,
             this.menuLopHP});
             this.quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
-            this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
+            this.quảnLýToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
             this.quảnLýToolStripMenuItem.Text = "Quản lý";
             // 
             // menuMonHoc
             // 
+            this.menuMonHoc.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.menuMonHoc.Name = "menuMonHoc";
             this.menuMonHoc.Size = new System.Drawing.Size(224, 26);
             this.menuMonHoc.Text = "Môn học ";
@@ -65,14 +66,14 @@
             // menuLopHP
             // 
             this.menuLopHP.Name = "menuLopHP";
-            this.menuLopHP.Size = new System.Drawing.Size(224, 26);
+            this.menuLopHP.Size = new System.Drawing.Size(182, 26);
             this.menuLopHP.Text = "Lớp học phần";
             // 
             // FormAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1016, 539);
             this.Controls.Add(this.menuStrip1);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;

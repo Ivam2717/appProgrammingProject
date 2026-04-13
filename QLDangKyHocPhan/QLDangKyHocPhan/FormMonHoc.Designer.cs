@@ -1,6 +1,6 @@
 ﻿namespace QLDangKyHocPhan
 {
-    partial class btnClear
+    partial class FormMonHoc
     {
         /// <summary>
         /// Required designer variable.
@@ -128,7 +128,7 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Số tín chỉ:";
             // 
-            // btnClear
+            // FormMonHoc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -142,7 +142,7 @@
             this.Controls.Add(this.btnThem);
             this.Controls.Add(this.txtSoTinChi);
             this.Controls.Add(this.txtTenMon);
-            this.Name = "btnClear";
+            this.Name = "FormMonHoc";
             this.Text = "FormMonHoc";
             this.Load += new System.EventHandler(this.FormMonHoc_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMonHoc)).EndInit();
